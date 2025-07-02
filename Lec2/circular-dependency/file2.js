@@ -1,5 +1,4 @@
-const file2 = require('./file2');
-
+const file1 = require('./file1');
 function sum(a, b) {
   return a + b;
 }

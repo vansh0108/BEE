@@ -1,6 +1,6 @@
 {
-  "name": "lec3-vanshsarna", 
-  "version": "1.0.2",
+  "name": "lec3-continue",
+  "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +10,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "express": "^5.1.0"
+    "lec3-vanshsarna": "^1.0.2"
   }
 }

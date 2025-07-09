@@ -21,7 +21,7 @@ let product = [{
 }];
 
 function buyProduct(product_name, cb) {
-    let isproduct = product.filter((p) => p.name.toLowerCase() == product_name.toLowerCase())[0];
+    let isproduct = product.filter((p) => p.name == product_name)[0];
     if (!isproduct) {
         cb("Product not found", null);
         return; // Prevents calling cb twice
@@ -30,10 +30,30 @@ function buyProduct(product_name, cb) {
         cb("Product out of stock", null);
         return;
     }
-    cb(null, isproduct.amount);
+    cb(null,isproduct.amount);
 }
+
+let available_amount = 200000;
+
+function deductbankamount(amount, cb) {
+    if (amount > available_amount) {
+        return cb ("Insufficient bank balance", null);
+    }else{
+        available_amount -= amount;
+        cb(null, "amount deducted");
+        console.log("Availaible amount:",available_amount);
+
+    }
+}
+
 
 buyProduct("samsung", function(err, amount){
     if(err) return console.log(err);;
-    console.log(amount);
+    console.log("Cost of device:",amount);
+    deductbankamount(amount, function(err, msg){
+        if(err) return console.log(err);
+        console.log(msg);
+})
 });
+
+// const fs = require("fs");

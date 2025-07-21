@@ -1,4 +1,3 @@
-
 const fs = require('fs');
 const title = process.argv[2];
 const description = process.argv[3];

@@ -20,8 +20,17 @@ res.end("hi"); //can only send string and response header set nahi hoga
 //1. query parameter
 app.get('/watch', (req, res) => {
   let  videoId = req.query.v;
-  res.send("got it");
+  let nId = req.query.n;
+  res.send("got it" + " " + videoId + " " + nId);
 });
+//2. params
+app.get('/watch/:v/video/:n', (req, res) => {
+    
+    console.log(req.params.v);
+    console.log(req.params.n);
+    res.send("got it !!!"); 
+});
+
 
 app.listen(3000, function() {
   console.log('server started');

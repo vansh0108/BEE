@@ -21,7 +21,7 @@ app.post('/users', function(req, res) {
     let name = req.body.name;
     let password = req.body.password; 
     const userData = { name, password };
-    fs.writeFile('user.txt', JSON.stringify(userData), (err) => {
+    fs.appendFile('user.txt', JSON.stringify(userData) + '\n', (err) => {
         if (err) {
             return res.status(500).json({ error: 'Failed to write file' });
         }

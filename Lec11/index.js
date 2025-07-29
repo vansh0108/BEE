@@ -53,3 +53,15 @@ ele5.classList.add("delete")
 console.log(ele5.classList.contains("delete"));
 ele5.classList.remove("item");
 console.log(ele5.classList);
+
+
+/*
+Element.addEventListener("event name", function(){
+})
+*/
+
+let signup = document.querySelector(".SignUp");
+let form = document.querySelector("#signup");
+signupbtn.addEventListener("click", function () {
+    form.classList.toggle("hide");
+});

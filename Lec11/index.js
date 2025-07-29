@@ -29,4 +29,17 @@ let data = el4.innerText;
 console.log(data);
 el4.innerText = "Hello World";
 let data2 = ul.innerHTML;
+let data3 = ul.innerText;
+let data4 = ul.textContent;
 console.log(data2);
+console.log(data3);
+console.log(data4);
+ul.innerHTML = `<li class = "item">Item 4</li>
+                <li class = "item">Item 5</li>
+                <li class = "item">Item 6</li>`;
+
+/*
+getAttribute
+setAttribute
+classList
+*/

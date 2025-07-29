@@ -12,11 +12,11 @@
 // let el3 = document.getElementsByTagName("p");
 // console.log(el3[0]);
 let el4 = document.querySelector("p");
-let el5 = document.querySelector(".item");
+
 let el6 = document.querySelectorAll(".item");
 let ul = document.querySelector("#container");
 console.log(el4);
-console.log(el5);
+
 console.log(el6);
 
 //properties
@@ -43,3 +43,13 @@ getAttribute
 setAttribute
 classList
 */
+let ele5=document.querySelector(".item");
+console.dir(ele5);
+console.dir(ele5.getAttribute("id"));
+console.dir(ele5.getAttribute("class"));
+ele5.setAttribute("id","js");
+console.log(ele5.getAttribute("id"));
+ele5.classList.add("delete")
+console.log(ele5.classList.contains("delete"));
+ele5.classList.remove("item");
+console.log(ele5.classList);

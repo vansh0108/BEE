@@ -7,7 +7,13 @@ function getUserData(URL) {
         return res.json()
     })
     .then((data) => {
-        console.log(data);
+        const ul = document.createElement('ul');
+         data.forEach(user => {
+            const li = document.createElement('li');
+            li.textContent = user.name;
+            ul.appendChild(li);
+        });
+        document.body.appendChild(ul);
     })
     .catch((err) => {
         console.error(err);

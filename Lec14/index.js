@@ -2,8 +2,18 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 
-app.use(express.static(__dirname+'public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+app.use(express.static(__dirname + '/public'));  
+
 app.get('/users', (req, res) => {
+    try {
+        let data = fs.readFileSync('users.json', 'utf8');
+        let alluser = data ? JSON.parse(data) : [];
+        res.json(alluser);
+    } catch (error) {
+        res.send(error);
+    }
 })
 app.post('/adduser', (req, res) => {
     try{
@@ -23,9 +33,14 @@ app.post('/adduser', (req, res) => {
     }
     alluser.push(newUsers);
     fs.writeFileSync('users.json', JSON.stringify(alluser));
+    res.redirect('/register.html');
 }catch(error){
     return res.send(error);
 }
+});
+
+app.listen(3000, () => {
+    console.log('Server is running on port 3000');
 });
 
 

@@ -1,10 +1,8 @@
-//fetch mai 2 baar .then lagta hai
-
 function getUserData(URL) {
    fetch(URL)
     .then((res) => {
         console.log(res);
-        return res.json()
+        return res.json();
     })
     .then((data) => {
         console.log(data);
@@ -14,7 +12,7 @@ function getUserData(URL) {
     })
     .catch((err) => {
         console.error(err);
-    })
+    });
 }
 
 let userContainer = document.querySelector('.user-container');
@@ -32,44 +30,51 @@ function displayUser(user){
             <div class="user-btn">
                 <button class="user-delete">Delete</button>
                 <button class="user-edit">Edit</button>
-            </div>`
-            userContainer.appendChild(li);
+            </div>`;
+  userContainer.appendChild(li);
 }
-getUserData('http://localhost:3000/users');
 
-function addUser(name,username,URL) {
+if (userContainer) {
+    getUserData('http://localhost:3000/users');
+}
+
+function addUser(name, username, URL) {
     let data = {
         name: name,
         username: username
-    }
+    };
     fetch(URL, {
-    
         method: 'POST',
         headers: {
-            'Content-Type': 'stringify'
+            'Content-Type': 'application/json'  // ✅ fixed
         },
         body: JSON.stringify(data)
     })
-    .then((res)=>{
+    .then((res) => {
         return res.json();
     })
-    .then((data)=>{
+    .then((data) => {
         console.log(data);
-        if(data.success){
+        if (data.success) {
             alert('user register successfully');
             nameInput.value = '';
             usernameInput.value = '';
-        }else{
-            alert(data.error);
+        } else {
+            alert(data.error || 'Something went wrong');
             nameInput.value = '';
             usernameInput.value = '';
         }
-      
     })
+    .catch((err) => {
+        console.error(err);
+    });
 }
-registrationForm.addEventListener('submit', function(e){
-    let name = nameInput.value;
-    let username = usernameInput.value;
-    addUser(name, username, 'http://localhost:3000/adduser');
-    
-})
+
+if (registrationForm) {
+    registrationForm.addEventListener('submit', function(e){
+        e.preventDefault();  // ✅ added this
+        let name = nameInput.value;
+        let username = usernameInput.value;
+        addUser(name, username, 'http://localhost:3000/adduser');
+    });
+}

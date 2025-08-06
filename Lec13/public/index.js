@@ -17,7 +17,7 @@ function getUserData(URL) {
     })
 }
 
-let userConatiner = document.querySelector('.user-container');
+let userContainer = document.querySelector('.user-container');
 function displayUser(user){
   let li = document.createElement('li');
   li.setAttribute('class', 'user-item');
@@ -29,6 +29,6 @@ function displayUser(user){
                 <button class="user-delete">Delete</button>
                 <button class="user-edit">Edit</button>
             </div>`
-            userConatiner.appendChild(li);
+            userContainer.appendChild(li);
 }
-getUserData('https://localhost:3000/users');
+getUserData('http://localhost:3000/users');

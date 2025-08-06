@@ -55,6 +55,15 @@ function addUser(name,username,URL) {
     })
     .then((data)=>{
         console.log(data);
+        if(data.success){
+            alert('user register successfully');
+            nameInput.value = '';
+            usernameInput.value = '';
+        }else{
+            alert(data.error);
+            nameInput.value = '';
+            usernameInput.value = '';
+        }
       
     })
 }

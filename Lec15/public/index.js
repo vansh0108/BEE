@@ -46,7 +46,7 @@ function addUser(name, username, URL) {
     fetch(URL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'  // ✅ fixed
+            'Content-Type': 'application/json'  
         },
         body: JSON.stringify(data)
     })
@@ -72,7 +72,7 @@ function addUser(name, username, URL) {
 
 if (registrationForm) {
     registrationForm.addEventListener('submit', function(e){
-        e.preventDefault();  // ✅ added this
+        e.preventDefault();  
         let name = nameInput.value;
         let username = usernameInput.value;
         addUser(name, username, 'http://localhost:3000/adduser');

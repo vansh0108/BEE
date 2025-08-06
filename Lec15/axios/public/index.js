@@ -19,3 +19,19 @@ try {
 }
 
 getComment('https://jsonplaceholder.typicode.com/comments/');
+
+
+ async function addBlog(URL, title, description) {
+  try {
+  let newBlog = {
+    title: title, 
+    description: description
+  };
+  let response = await axios.post(URL, newBlog)
+  console.log(response);
+  } catch (err) {
+    console.log(err);
+  }
+   
+  
+}

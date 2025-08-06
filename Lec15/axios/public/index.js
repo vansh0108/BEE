@@ -1,5 +1,5 @@
 //axios ek third party library hai jo HTTP requests ko asan banati hai
-const axios = require('axios');
+
 
 async function getComment(URL){
   //how to set get request using axios
@@ -20,7 +20,7 @@ try {
 
 getComment('https://jsonplaceholder.typicode.com/comments/');
 
-
+addBlog('http://localhost:3000/blog', 'My First Blog', 'This is the description of my first blog');
  async function addBlog(URL, title, description) {
   try {
   let newBlog = {

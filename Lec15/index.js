@@ -33,9 +33,15 @@ app.post('/adduser', (req, res) => {
     }
     alluser.push(newUsers);
     fs.writeFileSync('users.json', JSON.stringify(alluser));
-    res.redirect('/register.html');
+    res.json({
+        success: true,
+        data: alluser
+    });
 }catch(error){
-    return res.send(error);
+    return res.json({
+        success: false,
+        error: 'Error adding user'
+    });
 }
 });
 

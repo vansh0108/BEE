@@ -20,9 +20,22 @@ app.post('/blog',async (req,res)=>{
         data: newBlog,
         message: "Blog created successfully"
     });
-
-
 })
+app.get('/blog',async (req,res)=>{
+    let allBlogs = await Blogs.find();
+    res.json({
+        success: true,
+        data: allBlogs,
+    });
+});
+app.get('/blog/:id',async (req,res)=>{
+    let {id} = req.params;
+    let blog = await Blogs.findOne({_id: id});
+    res.json({
+        success: true,
+        data: blog,
+    });
+});
 
 
 

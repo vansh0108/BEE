@@ -5,18 +5,23 @@ const app=express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-const Blogs=require("./model/blog")
-const Users=require("./model/user")
+const Blogs=require("./model/blog");
+const user = require("./model/user");
 
 app.post("/blogs",async(req,res)=>{
     let {title,body,userId}=req.body;
+    let userExists = await user.findById(userId);
+    if(userExists){
     let newBlog=new Blogs({
         title:title,
         body:body,
         date:Date.now(),
         userId:userId
     })
+  }
     await newBlog.save()
+    userExists.blogs.push(newBlog._id);
+    await userExists.save();
     res.json({
         success:true,
         data:newBlog,

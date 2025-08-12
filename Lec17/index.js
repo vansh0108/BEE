@@ -9,11 +9,12 @@ const Blogs=require("./model/blog")
 const Users=require("./model/user")
 
 app.post("/blogs",async(req,res)=>{
-    let {title,body}=req.body;
+    let {title,body,userId}=req.body;
     let newBlog=new Blogs({
         title:title,
         body:body,
-        date:Date.now()
+        date:Date.now(),
+        userId:userId
     })
     await newBlog.save()
     res.json({
@@ -75,6 +76,6 @@ app.get("/users/:id", async (req, res) => {
 app.listen(3000,()=>{
     console.log("Server started");
 })
-+
+
 mongoose.connect('mongodb://127.0.0.1:27017/g26DB')
   .then(() => console.log('Connected!'));

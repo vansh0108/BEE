@@ -7,7 +7,7 @@ const BlogPost = new Schema({
     date: Date,
     userId:{
         type: mongoose.Types.ObjectId,
-        ref: user
+        ref: "User"
     }
 });
 

@@ -10,7 +10,7 @@ const userSchema = new Schema({
   password: String,
   blogs: [{
     type: mongoose.Types.ObjectId,
-    ref: blog
+    ref: "Blog"
   }]
 });
 module.exports=mongoose.model('User', userSchema);

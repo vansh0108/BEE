@@ -1,7 +1,9 @@
-const express = require("express");
-const router = express.Router();// small-> app
+const express = require("express")
+const router = express.Router()//small--->app
+const Blogs = require("../model/blogs")
 
-router.post("/blogs",async(req,res)=>{
+// Define your blog routes here
+router.post("/",async(req,res)=>{
     let {title,body,userId}=req.body;
     let userExists=await Users.findById(userId);
     if(userExists){
@@ -22,7 +24,7 @@ router.post("/blogs",async(req,res)=>{
     }
 })
 
-router.get("/blogs",async(req,res)=>{
+router.get("/",async(req,res)=>{
     let allblog=await Blogs.find();
     res.json({
         success:true,
@@ -30,7 +32,7 @@ router.get("/blogs",async(req,res)=>{
     })
 })
 
-router.get("/blogs/:id",async(req,res)=>{
+router.get("/:id",async(req,res)=>{
     let {id}=req.params
     let blog=await Blogs.findOne({_id:id});
     res.json({
@@ -38,8 +40,7 @@ router.get("/blogs/:id",async(req,res)=>{
         data:blog
     })
 })
-//DELETE BLOG
-router.delete("/blogs/:blogId",async (req,res)=>{
+router.delete("/:blogId",async (req,res)=>{
   let {blogId}=req.params;
   let {userId}=req.body;
   let blogExists=await Blogs.findById(blogId);
@@ -64,7 +65,7 @@ router.delete("/blogs/:blogId",async (req,res)=>{
 })
 
 //UPDATE BLOG
-router.put("/blogs/:blogId",async (req,res)=>{
+router.put("/:blogId",async (req,res)=>{
   let {blogId}=req.params;
   let {title,body,userId}=req.body;
   let blogExists1=await Blogs.findById(blogId);
@@ -84,4 +85,5 @@ router.put("/blogs/:blogId",async (req,res)=>{
     });
 })
 
-module.exports = router;
+
+module.exports = router

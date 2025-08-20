@@ -29,7 +29,7 @@ app.get('/health', (req, res) => {
         }
 
         let newUser = new User({ name:name, email:email, password:password });
-        await user.save();
+        await newUser.save();
         res.json({
             success: true,
             message: 'User created successfully',
@@ -47,14 +47,6 @@ app.get('/health', (req, res) => {
     
 
 
-app.get('/users', async (req, res) => {
-    try {
-        const users = await User.find();
-        res.json(users);
-    } catch (err) {
-        res.json({ error: err.message });
-    }
-});
 
 
 

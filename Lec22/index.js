@@ -6,6 +6,27 @@ var jwt = require('jsonwebtoken');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+function isLogin(req,res,next){
+   let token=req.headers.authorization;
+   console.log(token);
+   if(!token){
+    return res.json({
+        success:false,
+        message:"Please login first"
+    });
+   }
+   let decode = jwt.verify(token,"okk");
+   console.log(decode);
+   if(!decode){
+    return res.json({
+      success:false,
+      message: "Invalid token please login again"
+    })
+   }
+   next();
+    
+}
+
 
 
 app.get('/health', (req, res) => {
@@ -15,7 +36,13 @@ app.get('/health', (req, res) => {
     });
 });
 
-
+app.get('/home',isLogin,(req,res)=>{
+    let username;
+    res.json({
+        success:true,
+        message:"Welcome to home page"+username
+    });
+})
 // Endpoint to create a new user in db
 app.post('/api/users/signup', async (req, res) => {
     try {
@@ -110,7 +137,7 @@ mongoose.connect("mongodb://localhost:27017/blogapp", {
     console.error('Error connecting to MongoDB:', err);
 });
 
-app.listen(5555,(req,res)=>{
+app.listen(3000,(req,res)=>{
     console.log(`Server is running on port 3000`);
 });
 

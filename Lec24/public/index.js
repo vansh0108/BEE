@@ -1,4 +1,4 @@
-const { sign } = require("jsonwebtoken");
+
 
 let signupForm=document.querySelector("#signup-form");
 let signupName=document.querySelector("#signup-name");

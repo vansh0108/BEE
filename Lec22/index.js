@@ -7,6 +7,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 function isLogin(req,res,next){
+    // if(!req.headers.authorization){
+          
+    // }
    let token=req.headers.authorization;
    console.log(token);
    if(!token){
@@ -23,6 +26,7 @@ function isLogin(req,res,next){
       message: "Invalid token please login again"
     })
    }
+   req.user = decode.user;
    next();
     
 }
@@ -38,6 +42,7 @@ app.get('/health', (req, res) => {
 
 app.get('/home',isLogin,(req,res)=>{
     let username;
+    console.log(req.user);
     res.json({
         success:true,
         message:"Welcome to home page"+username

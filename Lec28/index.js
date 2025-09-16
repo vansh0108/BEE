@@ -22,3 +22,4 @@ async function getAllUser(){
 getAllUser().then((data)=>{
     console.log(data);
 });
+

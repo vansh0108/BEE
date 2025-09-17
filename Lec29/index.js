@@ -29,7 +29,7 @@ const prisma = new PrismaClient();
 
 // }
 
-// addTweet("My first tweet",3)
+// addTweet("My fourth tweet",7)
 // .then(()=>{
 //     console.log("Tweet added");
 // })
@@ -94,14 +94,26 @@ const prisma = new PrismaClient();
 
    async function printAllUserEmailName() {
       const users = await prisma.user.findMany({
-         select: {
-            email: true,
-            name: true
+         // select: {
+         //    email: true,
+         //    name: true,
+         //    tweets: {
+         //       select: {
+         //          content: true
+         //       }
+         //    }
+         // }
+         include: {
+            tweets: {
+               select: {
+                  content: true
+               }
+            }
          }
       });
-      users.forEach(user => {
-         console.log(`Email: ${user.email}, Name: ${user.name}`);
-      });
+     return users;
    }
 
-   printAllUserEmailName();
+       printAllUserEmailName()
+       .then((data) => { console.log(JSON.stringify(data,null,2));})
+          

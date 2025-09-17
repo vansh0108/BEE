@@ -26,7 +26,7 @@ async function addTweet(content,userId){
 
 }
 
-// addTweet("My first tweet",1)
+// addTweet("My first tweet",3)
 // .then(()=>{
 //     console.log("Tweet added");
 // })
@@ -70,7 +70,7 @@ async function updateTweet(tweetId,userId,updatedContent){
 //    console.log("Tweet updated");
 // });
 
-// create a function to delete user by id
+
 async function deleteUser(userId){
    await prisma.user.delete({
       where:{
@@ -78,7 +78,8 @@ async function deleteUser(userId){
       }
    });
 }
-deleteUser(2)
+
+deleteUser(3)
 .then(()=>{
    console.log("User deleted");
 })

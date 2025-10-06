@@ -8,9 +8,13 @@ function App() {
   //use Effect --> hook use to do side-effect in react
   let [ws,setWs] = useState(null);
   useEffect(()=>{
-    const socket = new WebSocket("ws://localhost:8888");
+    let socket = new WebSocket("ws://localhost:8888");
+    socket.onmessage=((e)=>{
+      console.log(e.data);
+    })
     setWs(socket);
-  },[])
+  },[]);
+  
 
   function sendMessage(){
     ws.send("ping");

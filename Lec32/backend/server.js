@@ -18,6 +18,9 @@ wss.on("connection", function(socket){
     allSocket.push(socket);
     socket.on("message", function(msg){
         console.log("Message received: " + msg.toString());
+        if(msg.toString() === "ping"){
+            socket.send("pong");
+        }
         allSocket.forEach((s)=>{
             s.send(msg.toString());
         }) 

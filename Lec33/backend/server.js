@@ -1,4 +1,5 @@
 const {WebSocketServer} = require("./node_modules/ws");
+const { v4 : uuidv4 } = require('uuid');
 const wss = new WebSocketServer({port:8888});
 
 // wss.on("connection", function(socket){
@@ -54,7 +55,15 @@ wss.on("connection", (socket)=>{
                 allClients.forEach((s)=>{
                     s.send(message);
                 })
-
+            }else if(type =="create"){
+                let roomId = uuidv4();
+                socket.send(JSON.stringify({
+                    type:"create",
+                    payload:{
+                        roomId:roomId
+                    }
+                }
+            ));
             }
     });
 })

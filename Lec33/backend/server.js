@@ -43,7 +43,17 @@ wss.on("connection", (socket)=>{
                 }
                 rooms.get(roomId).add(socket);
                 console.log(rooms);
+                socket.roomId = roomId;
                 socket.send("added to room");
+
+            }
+            else if(type == "chat"){
+                let {message} = payload;
+                let {roomId} = socket;
+                let allClients = rooms.get(roomId);
+                allClients.forEach((s)=>{
+                    s.send(message);
+                })
 
             }
     });

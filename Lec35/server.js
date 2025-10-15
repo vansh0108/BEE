@@ -27,12 +27,20 @@ app.post("/api/submission", async function (req, res) {
 
 let worker = new Worker('code-queue',function(job){
     let {qId, code, language} = job.data;
-    return {
-        qId:qId,
-        status:"success",
-        time: "4ms",
-        beat: "top 10%"
-    };
+    setTimeout(()=>{
+        console.log({
+            qId:qId,
+            status:"success",
+            time: "4ms",
+            beat: "top 10%"
+        })
+        return{
+            qId:qId,
+            status:"success",
+            time: "4ms",
+            beat: "top 10%"
+        }
+    },5000);
 
 },{
     connection: {

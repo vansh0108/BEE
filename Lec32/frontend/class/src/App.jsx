@@ -6,7 +6,10 @@ import { useEffect } from 'react'
 
 function App() {
   //use Effect --> hook use to do side-effect in react
-  let [ws,setWs] = useState(null);
+  let [ws,setWs] = useState(null); //to create state variable
+  let inputRef = useRef();
+
+
   useEffect(()=>{
     let socket = new WebSocket("ws://localhost:8888");
     socket.onmessage=((e)=>{
@@ -17,7 +20,10 @@ function App() {
   
 
   function sendMessage(){
-    ws.send("ping");
+    let message = inputRef.current.value;
+    ws.send(message);
+    inputRef.current.value = "";
+   95
   }
 
   return (

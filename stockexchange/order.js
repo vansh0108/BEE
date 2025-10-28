@@ -31,3 +31,13 @@ class OrderBook{
 }
 //if a function or variable start with (private)
 //let orderbook = new OrderBook("BTCUSD")
+let BTCUSDOrderBook = new OrderBook("BTCUSD");
+BTCUSDOrderBook.bids.push({orderId:2,side:"BUY",type:"MARKET",price:100,quantity:10,
+timestamp:Date.now(),user:"Vansh"});
+BTCUSDOrderBook.bids.push({orderId:2,side:"BUY",type:"MARKET",price:99,quantity:10,
+timestamp:Date.now(),user:"Sahil"});
+BTCUSDOrderBook.bids.push({orderId:2,side:"BUY",type:"MARKET",price:98,quantity:10,
+timestamp:Date.now(),user:"Gaurish"});
+
+BTCUSDOrderBook._sort("BUY");
+console.log(BTCUSDOrderBook.bids);

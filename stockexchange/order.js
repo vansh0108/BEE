@@ -40,7 +40,7 @@ class OrderBook{
     
     */
 
-    placeholder(symbol,side,type,price=null,quantity,user){
+    placeholder(side,type,price=null,quantity,user){
         /* Baasic Validation */
         let order = {
             orderId : this._genOrderId(),
@@ -49,15 +49,18 @@ class OrderBook{
             type : type,
             price : price,
             orignqty : quantity,
-            remainingqty : quantity,
+            remainqty : quantity,
             execqty : 0,
             timestamp : Date.now(),
             user : user
         }
         if(type==="MARKET"){
-            this._marketMatch(order);
+            let result = this._marketMatch(order);
+            if(order.remainqty>0){
+                console.log(" order completed "+ result.execqty+ " order.remainqty"+result.remainqty);
+            }
         }else{
-            this._limitMatch(order);
+            let result = this._limitMatch(order);
         }
     }
     //execute order if it is market order
@@ -74,25 +77,77 @@ class OrderBook{
     */
     _marketMatch(order){
        if(order.side==="BUY"){
+         let askArr = this.ask;
+         
+          while(order.remainqty>0 && askArr.length>0){
+            let top = askArr[0];
+            let orderfill = Math.min(order.remainqty,top.remainqty);
+            order.execqty += orderfill;
+            order.remainqty -= orderfill;
 
+            top.execqty += orderfill;
+            top.remainqty -= orderfill;
 
-       }
-
+            if(top.remainqty<=0){
+                askArr.shift();
+            }
+          }
+        }
+        return {order}
     }
+
     //execute order if it is limit order
     _limitMatch(){
+        if(order.side==="BUY"){
+            let opposite = this.ask;
+            while(order.remainqty>0 && opposite.length>0){
+                let top = opposite[0];
+                if(order.price>=top.price){
+                    let filledOrders = Math.min(order.remainqty,top.remainqty);
+                    order.execqty += filledOrders;
+                    order.remainqty -= filledOrders;
+
+                    top.execqty += filledOrders;
+                    top.remainqty -= filledOrders;
+                    if(top.remainqty<=0){
+                        opposite.shift();
+                    }
+                }
+            }
+            if(order.remainqty>0){
+                this.bids.push(order);
+                this._sort("BUY"); 
+            }
+        }
         
+    }
+    getBookSnapshot(){
+        return {
+            lastUpdated : Date.now(),
+            bids: this.bids.map((o)=>([o.price,o.remainqty])),
+            ask: this.ask.map((o)=>([o.price,o.remainqty])),
+            // currentPrice:
+        }
     }
 }
 //if a function or variable start with (private)
 //let orderbook = new OrderBook("BTCUSD")
 let BTCUSDOrderBook = new OrderBook("BTCUSD");
-BTCUSDOrderBook.bids.push({orderId:2,side:"BUY",type:"MARKET",price:100,quantity:10,
-timestamp:Date.now(),user:"Vansh"});
-BTCUSDOrderBook.bids.push({orderId:2,side:"BUY",type:"MARKET",price:99,quantity:10,
-timestamp:Date.now(),user:"Sahil"});
-BTCUSDOrderBook.bids.push({orderId:2,side:"BUY",type:"MARKET",price:98,quantity:10,
-timestamp:Date.now(),user:"Gaurish"});
 
-BTCUSDOrderBook._sort("BUY");
-console.log(BTCUSDOrderBook.bids);
+
+
+BTCUSDOrderBook.placeholder("BUY","LIMIT","1506.00",10,"Gaurish");
+BTCUSDOrderBook.placeholder("BUY","LIMIT","1505.00",20,"Sahil");
+BTCUSDOrderBook.placeholder("BUY","LIMIT","1500.00",10,"Vansh");
+
+BTCUSDOrderBook.placeholder("SELL","LIMIT","1510.00",5,"Anuj");
+BTCUSDOrderBook.placeholder("SELL","LIMIT","1515.00",15,"Rohit");
+BTCUSDOrderBook.placeholder("SELL","LIMIT","1520.00",10,"Karan");
+
+console.log(BTCUSDOrderBook.getBookSnapshot());
+
+
+
+
+// BTCUSDOrderBook._sort("BUY");
+// console.log(BTCUSDOrderBook.bids);

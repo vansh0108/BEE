@@ -28,10 +28,7 @@ class OrderBook{
 
         }
     }
-    //   explain the logic why bids and ask are sorted in such way ?
-    // Ans - Bids are sorted in descending order because buyers want to pay the lowest price possible, so higher bids take precedence.
-    // Asks are sorted in ascending order because sellers want to sell at the highest price possible, so lower asks take precedence.
-    
+   
 
     //function to place new order in orderbook
     /* 
@@ -97,7 +94,7 @@ class OrderBook{
     }
 
     //execute order if it is limit order
-    _limitMatch(){
+    _limitMatch(order){
         if(order.side==="BUY"){
             let opposite = this.ask;
             while(order.remainqty>0 && opposite.length>0){
@@ -112,6 +109,8 @@ class OrderBook{
                     if(top.remainqty<=0){
                         opposite.shift();
                     }
+                }else{
+                    break;
                 }
             }
             if(order.remainqty>0){
@@ -126,12 +125,15 @@ class OrderBook{
                     let filledOrders = Math.min(order.remainqty,top.remainqty);
                     order.execqty += filledOrders;
                     order.remainqty -= filledOrders;
-                    
+
                     top.execqty += filledOrders;
                     top.remainqty -= filledOrders;
                     if(top.remainqty<=0){
                         opposite.shift();
                     }
+                }
+                else{
+                    break;
                 }
             }
             if(order.remainqty>0){
@@ -155,14 +157,16 @@ class OrderBook{
 let BTCUSDOrderBook = new OrderBook("BTCUSD");
 
 
+console.log(BTCUSDOrderBook.getBookSnapshot());
+BTCUSDOrderBook.placeholder("BUY","LIMIT",1506.00,10,"Gaurish");
+BTCUSDOrderBook.placeholder("BUY","LIMIT",1505.00,20,"Sahil");
+BTCUSDOrderBook.placeholder("BUY","LIMIT",1500.00,10,"Vansh");
 
-BTCUSDOrderBook.placeholder("BUY","LIMIT","1506.00",10,"Gaurish");
-BTCUSDOrderBook.placeholder("BUY","LIMIT","1505.00",20,"Sahil");
-BTCUSDOrderBook.placeholder("BUY","LIMIT","1500.00",10,"Vansh");
+console.log(BTCUSDOrderBook.getBookSnapshot());
 
-BTCUSDOrderBook.placeholder("SELL","LIMIT","1510.00",5,"Anuj");
-BTCUSDOrderBook.placeholder("SELL","LIMIT","1515.00",15,"Rohit");
-BTCUSDOrderBook.placeholder("SELL","LIMIT","1520.00",10,"Karan");
+BTCUSDOrderBook.placeholder("SELL","LIMIT",1510.00,5,"Anuj");
+BTCUSDOrderBook.placeholder("SELL","LIMIT",1515.00,15,"Rohit");
+BTCUSDOrderBook.placeholder("SELL","LIMIT",1520.00,10,"Karan");
 
 console.log(BTCUSDOrderBook.getBookSnapshot());
 

@@ -1,7 +1,6 @@
-const router = require('express').Router();
-// controller lives in api/controller relative to this file
-const { placeOrder } = require('../controller/order_v2');
+const router=require("express").Router();
+const {postPlaceOrder}=require("../controllers/order");
 
-router.post('/', placeOrder);
+router.post("/",postPlaceOrder);
 
-module.exports = router;
+module.exports=router

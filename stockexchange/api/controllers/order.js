@@ -1,4 +1,4 @@
-const OrderBook = require("../service/orderService");
+const OrderBook = require("./service/orderService");
 let {publisher}=require("../../shared/server");
 let ob=new OrderBook("BTCUSD");  //global object
 
@@ -17,4 +17,9 @@ module.exports.postPlaceOrder=async(req,res)=>{
         }
     })
     console.log(response);
+}
+
+module.exports.getOrderBook=async(req,res)=>{
+    // to get the current state of order book
+
 }

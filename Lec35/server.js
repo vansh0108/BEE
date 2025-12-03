@@ -1,3 +1,5 @@
+//A Message Queue allows you to send jobs (“messages”) that will be processed later
+//  by a separate system (a worker).
 const express = require('express');
 const app = express();
 app.use(express.json());
@@ -5,7 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 const {Queue} = require('bullmq');
 const { Worker } = require('bullmq');
 
-let codeQueue = new Queue('code-queue',{
+let codeQueue = new Queue('code-queue',{ // create a new message queue named 'code-queue'
     connection:{
         host:'localhost',
         port:6379,
@@ -15,17 +17,17 @@ let codeQueue = new Queue('code-queue',{
 
 app.post("/api/submission", async function (req, res) {
     let {qId, code, language} = req.body;
-    let job = await codeQueue.add('submission', { qId, code, language });
+    let job = await codeQueue.add('submission', { qId, code, language }); //1. Creating a new job inside the queue 2. Redis stores the job 3.  Worker will pick it later
     console.log(job.id);
     
 
-    //offload the job to message queue, so that a worker can do the task
+
     res.json({
         submissionId: job.id
     });
 });
 
-let worker = new Worker('code-queue',function(job){
+let worker = new Worker('code-queue',function(job){ // worker picks the job from the queue and process it
     let {qId, code, language} = job.data;
     setTimeout(()=>{
         console.log({
@@ -49,7 +51,7 @@ let worker = new Worker('code-queue',function(job){
     }
 });
 
-worker.on('error', err => {
+worker.on('error', err => { // error handling for the worker
     console.error(err)
 });
 

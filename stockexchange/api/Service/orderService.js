@@ -1,4 +1,5 @@
 class OrderBook {
+    
     constructor(symbol = "BTCUSD") {  //new OrderBook=new OrderBook("BTCUSD") {bracket ke andr vali cheez symbol h}
         this.symbol = symbol,
         this.bids = [],

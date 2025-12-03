@@ -112,7 +112,7 @@ app.post('/api/auth/login', async (req, res) => {
           });
        }
         if(userExist.password==password){
-          var token = jwt.sign({"user":userExist},"okk");//payload vo information jo hume token me rakhni hai
+        var token = jwt.sign({"user":userExist},"okk");//payload vo information jo hume token me rakhni hai
           return res.json({
             success: true,
             message: 'login successful',
